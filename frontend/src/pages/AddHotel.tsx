@@ -1,25 +1,20 @@
-import { useMutation } from "react-query";
-import ManageHotelForm from "../forms/ManageHotelForm/ManageHotelForm";
-import { useAppContext } from "../contexts/AppContext";
-import * as apiClient from "../api-client";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
 
-const AddHotel = () => {
-  const { showToast } = useAppContext();
+interface Props {
+  children: React.ReactNode;
+}
 
-  const { mutate, isLoading } = useMutation(apiClient.addMyHotel, {
-    onSuccess: () => {
-      showToast({ message: "Hotel Saved!", type: "SUCCESS" });
-    },
-    onError: () => {
-      showToast({ message: "Error Saving Hotel", type: "ERROR" });
-    },
-  });
-
-  const handleSave = (hotelFormData: FormData) => {
-    mutate(hotelFormData);
-  };
-
-  return <ManageHotelForm onSave={handleSave} isLoading={isLoading} />;
+const Layout = ({ children }: Props) => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <Hero />
+      <div className="container mx-auto py-10 flex-1">{children}</div>
+      <Footer />
+    </div>
+  );
 };
 
-export default AddHotel;
+export default Layout;
